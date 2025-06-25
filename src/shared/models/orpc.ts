@@ -3,11 +3,11 @@ import {
   AllowCommercialUseSchema,
   BaseModelsSchema,
   CheckpointTypeSchema,
+  Models_ModelSchema,
   ModelsRequestPeriodSchema,
   ModelsRequestSortSchema,
   ModelTypesSchema,
-} from "../base/misc.ts";
-import { Models_ModelSchema } from "..//civitai/models_endpoint.ts";
+} from "./civitai/mod.ts";
 
 export const LocalModels_RequestOptsSchema = type({
   limit: "number.integer", // The number of results to be returned per page. This can be a number between 1 and 100. By default, each page will return 100 results
@@ -47,3 +47,9 @@ export const LocalModels_ResponseSchema = type({
   },
 });
 export type LocalModels_Response = typeof LocalModels_ResponseSchema.infer;
+
+export const ORPC_ResponseSchema = type({
+  success: "boolean",
+  message: "string",
+  data: "null",
+});
