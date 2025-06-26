@@ -58,7 +58,7 @@ export const scanLocalModels = os
   .route({
     method: "GET",
     path: "/db/models/scan",
-  }).input(type("undefined")).output(ORPC_ResponseSchema.and({
+  }).output(ORPC_ResponseSchema.and({
     "data?": LocalModels_ResponseSchema,
   })).handler(async ({ Input, context }) => {
     throw new Error("unimplemented!");

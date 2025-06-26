@@ -6,7 +6,14 @@
     "server:start": "deno run -A --node-modules-dir --watch ./server/main.ts",
     "serve": "deno task build && deno task server:start"
   },
+  "compilerOptions": {
+    "types": ["react", "react-dom", "express", "cors"],
+    "lib": ["dom", "dom.iterable", "deno.ns"],
+    "jsx": "react-jsx",
+    "jsxImportSource": "react"
+  },
   "imports": {
+    "#settings": "./settings.ts",
     "#client/": "./src/client/src/",
     "#prisma/": "./src/prisma/",
     "#server/": "./src/server/",
@@ -23,6 +30,7 @@
     "@types/react": "npm:@types/react@^19.1.8",
     "@vitejs/plugin-react": "npm:@vitejs/plugin-react@^4.5.2",
     "arktype": "npm:arktype@^2.1.20",
+    "conf": "npm:conf@^14.0.0",
     "cors": "npm:cors@^2.8.5",
     "daisyui": "npm:daisyui@^5.0.43",
     "es-toolkit": "npm:es-toolkit@^1.39.4",
@@ -36,11 +44,5 @@
     "react-router-dom": "npm:react-router-dom@^7.6.2",
     "tailwindcss": "npm:tailwindcss@^4.1.10",
     "vite": "npm:vite@^6.3.5"
-  },
-  "compilerOptions": {
-    "types": ["react", "react-dom", "express", "cors"],
-    "lib": ["dom", "dom.iterable", "deno.ns"],
-    "jsx": "react-jsx",
-    "jsxImportSource": "react"
   }
 }

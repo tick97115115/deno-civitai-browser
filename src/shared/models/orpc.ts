@@ -47,9 +47,3 @@ export const LocalModels_ResponseSchema = type({
   },
 });
 export type LocalModels_Response = typeof LocalModels_ResponseSchema.infer;
-
-export const ORPC_ResponseSchema = type({
-  success: "boolean",
-  message: "string",
-  data: "null",
-});

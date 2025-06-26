@@ -5,6 +5,7 @@ import {
   scanLocalModels,
   updateOneModelRecord,
 } from "./db.ts";
+import { getSettings, newSettings } from "./settings.ts";
 
 export const router = {
   db: {
@@ -17,5 +18,9 @@ export const router = {
       queryLocalModels,
       scanLocalModels,
     },
+  },
+  settings: {
+    newSettings,
+    getSettings,
   },
 };
