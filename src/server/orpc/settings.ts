@@ -7,10 +7,10 @@ export const newSettings = os
   .input(SettingsSchema)
   .handler(({ input }) => {
     settings.store = input;
-  });
+  }).callable({ context: {} });
 
 export const getSettings = os
   .route({ method: "GET", path: "/settings" })
   .output(SettingsSchema).handler(() => {
     return settings.store;
-  });
+  }).callable({ context: {} });

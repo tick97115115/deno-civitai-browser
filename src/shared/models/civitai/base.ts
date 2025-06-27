@@ -2,7 +2,7 @@ import { type } from "arktype";
 
 // https://www.jsondiff.com/ find all shared properties names
 
-export const ModelTypesArray: Array<string> = [
+export const ModelTypesSchema = type.enumerated(
   "Checkpoint",
   "TextualInversion",
   "Hypernetwork",
@@ -19,61 +19,58 @@ export const ModelTypesArray: Array<string> = [
   "Wildcards",
   "Workflows",
   "Detection",
-] as const;
-export const ModelTypesSchema = type.enumerated(
-  ...ModelTypesArray,
 );
 export type ModelTypes = typeof ModelTypesSchema.infer;
+export const ModelTypesArray = ModelTypesSchema
+  .select("unit").map((u) => u.name);
 
-export const ModelsRequestPeriodArray = [
+export const ModelsRequestPeriodSchema = type.enumerated(
   "AllTime",
   "Day",
   "Week",
   "Month",
   "Year",
-] as const;
-export const ModelsRequestPeriodSchema = type.enumerated(
-  ...ModelsRequestPeriodArray,
 );
 export type ModelsRequestPeriod = typeof ModelsRequestPeriodSchema.infer;
+export const ModelsRequestPeriodArray = ModelsRequestPeriodSchema
+  .select("unit").map((u) => u.name);
 
-export const AllowCommercialUseArray = [
+export const AllowCommercialUseSchema = type.enumerated(
   "Image",
   "RentCivit",
   "Rent",
   "Sell",
   "None",
-] as const;
-export const AllowCommercialUseSchema = type.enumerated(
-  ...AllowCommercialUseArray,
 );
 export type AllowCommercialUse = typeof AllowCommercialUseSchema.infer;
+export const AllowCommercialUseArray = AllowCommercialUseSchema
+  .select("unit").map((u) => u.name);
 
-export const ModelsRequestSortArray = [
+export const ModelsRequestSortSchema = type.enumerated(
   "Highest Rated",
   "Most Downloaded",
   "Newest",
-];
-export const ModelsRequestSortSchema = type.enumerated(
-  ...ModelsRequestSortArray,
 );
 export type ModelsRequestSort = typeof ModelsRequestSortSchema.infer;
+export const ModelsRequestSortArray = ModelsRequestSortSchema
+  .select("unit").map((u) => u.name);
 
-export const NsfwLevelArray = [
+export const NsfwLevelSchema = type.enumerated(
   "None",
   "Soft",
   "Mature",
   "X",
   "Blocked",
-] as const;
-export const NsfwLevelSchema = type.enumerated(...NsfwLevelArray);
+);
 export type NsfwLevel = typeof NsfwLevelSchema.infer;
+export const NsfwLevelArray = NsfwLevelSchema.select("unit").map((u) => u.name);
 
-export const CheckpointTypeArray = ["Merge", "Trained"] as const;
-export const CheckpointTypeSchema = type.enumerated(...CheckpointTypeArray);
+export const CheckpointTypeSchema = type.enumerated("Merge", "Trained");
 export type CheckpointType = typeof CheckpointTypeSchema.infer;
+export const CheckpointTypeArray = CheckpointTypeSchema
+  .select("unit").map((u) => u.name);
 
-export const BaseModelsArray = [
+export const BaseModelsSchema = type.enumerated(
   "Aura Flow",
   "CogVideoX",
   "Flux .1 D",
@@ -120,6 +117,7 @@ export const BaseModelsArray = [
   "SVD XT",
   "Stable Cascade",
   "WAN Video",
-] as const;
-export const BaseModelsSchema = type.enumerated(...BaseModelsArray);
+);
 export type BaseModels = typeof BaseModelsSchema.infer;
+export const BaseModelsArray = BaseModelsSchema
+  .select("unit").map((u) => u.name);

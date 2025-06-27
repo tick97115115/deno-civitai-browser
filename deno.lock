@@ -2,7 +2,9 @@
   "version": "5",
   "specifiers": {
     "jsr:@std/assert@1": "1.0.13",
+    "jsr:@std/fs@^1.0.18": "1.0.18",
     "jsr:@std/internal@^1.0.6": "1.0.7",
+    "jsr:@std/path@^1.1.0": "1.1.0",
     "npm:@deno/vite-plugin@^1.0.5": "1.0.5_vite@6.3.5__picomatch@4.0.2__@types+node@22.15.15_@types+node@22.15.15",
     "npm:@orpc/client@^1.5.2": "1.5.2",
     "npm:@orpc/openapi@^1.5.2": "1.5.2",
@@ -38,8 +40,17 @@
         "jsr:@std/internal"
       ]
     },
+    "@std/fs@1.0.18": {
+      "integrity": "24bcad99eab1af4fde75e05da6e9ed0e0dce5edb71b7e34baacf86ffe3969f3a",
+      "dependencies": [
+        "jsr:@std/path"
+      ]
+    },
     "@std/internal@1.0.7": {
       "integrity": "39eeb5265190a7bc5d5591c9ff019490bd1f2c3907c044a11b0d545796158a0f"
+    },
+    "@std/path@1.1.0": {
+      "integrity": "ddc94f8e3c275627281cbc23341df6b8bcc874d70374f75fec2533521e3d6886"
     }
   },
   "npm": {
@@ -2930,6 +2941,8 @@
   "workspace": {
     "dependencies": [
       "jsr:@std/assert@1",
+      "jsr:@std/fs@^1.0.18",
+      "jsr:@std/path@^1.1.0",
       "npm:@deno/vite-plugin@^1.0.5",
       "npm:@orpc/client@^1.5.2",
       "npm:@orpc/openapi@^1.5.2",
