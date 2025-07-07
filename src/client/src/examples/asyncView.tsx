@@ -1,5 +1,4 @@
 import { Suspense, use } from "react";
-import "./App.css";
 
 function fetchData(): Promise<string> {
   return new Promise((res) => {
