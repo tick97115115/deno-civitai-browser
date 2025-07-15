@@ -1,9 +1,15 @@
+import { useState } from "react";
+import { type Models_Model } from "#shared/models/civitai/mod.ts";
 import {
+  Card,
   Checkbox,
+  Col,
   type GetProp,
   Input,
   Layout,
+  List,
   Popover,
+  Row,
   Select,
   Space,
 } from "antd";
@@ -17,12 +23,14 @@ const layoutStyle: React.CSSProperties = {
   height: "100dvh",
 };
 const footerStyle: React.CSSProperties = {
-  backgroundColor: "aqua",
+  backgroundColor: "rgba(255, 255, 128, 0.09)",
   display: "flex",
   justifyContent: "center",
+  padding: "12px 24px",
 };
 const contentStyle: React.CSSProperties = {
   backgroundColor: "azure",
+  overflow: "auto",
 };
 
 const searchBarStyle: React.CSSProperties = {
@@ -74,41 +82,57 @@ const onChange: GetProp<typeof Checkbox.Group, "onChange"> = (
   console.log("checked = ", checkedValues);
 };
 const AdvancedSearchOpts = (
-  <div style={searchBarPopoverStyle}>
-    <Checkbox.Group
-      options={plainOptions}
-      defaultValue={["Apple"]}
-      onChange={onChange}
-    />
-    <Select
-      mode="multiple"
-      style={{ width: "100%" }}
-      placeholder="select one country"
-      defaultValue={["china"]}
-      onChange={handleChange}
-      options={options}
-      optionRender={(option) => (
-        <Space>
-          <span role="img" aria-label={option.data.label}>
-            {option.data.emoji}
-          </span>
-          {option.data.desc}
-        </Space>
-      )}
-    />
-    <Select
-      showSearch
-      placeholder="Select a person"
-      filterOption={(input, option) =>
-        (option?.label ?? "").toLowerCase().includes(input.toLowerCase())}
-      options={[
-        { value: "1", label: "Jack" },
-        { value: "2", label: "Lucy" },
-        { value: "3", label: "Tom" },
-      ]}
-    />
-    <Input placeholder="CivitAI Token" prefix={<KeyOutlined />} />
-  </div>
+  <Space direction="vertical" size="small" style={searchBarPopoverStyle}>
+    <Row gutter={[16, 16]}>
+      <Col span={24}>
+        <Checkbox.Group
+          options={plainOptions}
+          defaultValue={["Apple"]}
+          onChange={onChange}
+        />
+      </Col>
+    </Row>
+    <Row>
+      <Col span={24}>
+        <Select
+          mode="multiple"
+          style={{ width: "100%" }}
+          placeholder="select one country"
+          defaultValue={["china"]}
+          onChange={handleChange}
+          options={options}
+          optionRender={(option) => (
+            <Space>
+              <span role="img" aria-label={option.data.label}>
+                {option.data.emoji}
+              </span>
+              {option.data.desc}
+            </Space>
+          )}
+        />
+      </Col>
+    </Row>
+    <Row>
+      <Col>
+        <Select
+          showSearch
+          placeholder="Select a person"
+          filterOption={(input, option) =>
+            (option?.label ?? "").toLowerCase().includes(input.toLowerCase())}
+          options={[
+            { value: "1", label: "Jack" },
+            { value: "2", label: "Lucy" },
+            { value: "3", label: "Tom" },
+          ]}
+        />
+      </Col>
+    </Row>
+    <Row>
+      <Col>
+        <Input placeholder="CivitAI Token" prefix={<KeyOutlined />} />
+      </Col>
+    </Row>
+  </Space>
 );
 
 function SearchBar() {
@@ -132,7 +156,8 @@ function SearchBar() {
 const App = () => (
   <div>
     <Layout style={layoutStyle}>
-      <Content style={contentStyle}>content</Content>
+      <Content style={contentStyle}>
+      </Content>
       <Footer style={footerStyle}>
         <SearchBar></SearchBar>
       </Footer>

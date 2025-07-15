@@ -1,12 +1,12 @@
 import { create } from "zustand";
 // import { type Models_Model } from "#shared/models/civitai/mod.ts";
 
-interface ModelDetailViewState {
+interface IModelDetailViewState {
   targetModel?: string;
   changeTargetModel: () => void;
 }
 
-const useModelDetailViewStore = create<ModelDetailViewState>()((set) => ({
+const useModelDetailViewStore = create<IModelDetailViewState>()((set) => ({
   targetModel: undefined,
   changeTargetModel: () => set((_state) => ({ targetModel: "model" })),
 }));
