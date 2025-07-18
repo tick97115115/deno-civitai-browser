@@ -3,7 +3,6 @@
   "deno.lint": true,
   "deno.codeLens.test": true,
   "deno.envFile": ".env",
-  "editor.tabSize": 2,
-  "editor.formatOnSave": true,
+  "editor.formatOnSave": false,
   "editor.defaultFormatter": "denoland.vscode-deno",
 }

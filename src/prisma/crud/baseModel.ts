@@ -1,7 +1,7 @@
 import { prisma } from "../client.ts";
 
-export async function findOrCreateOneBaseModel(baseModelString: string) {
-  const record = await prisma.baseModel.upsert({
+export function findOrCreateOneBaseModel(baseModelString: string) {
+  return prisma.baseModel.upsert({
     where: {
       name: baseModelString,
     },
@@ -10,5 +10,4 @@ export async function findOrCreateOneBaseModel(baseModelString: string) {
       name: baseModelString,
     },
   });
-  return record;
 }

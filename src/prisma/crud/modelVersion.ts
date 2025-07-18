@@ -19,6 +19,8 @@ import {
 import type { ModelTypes } from "#shared/models/civitai/mod.ts";
 import { type } from "arktype";
 import { exists, expandGlob } from "@std/fs";
+import { findOrCreateOneModelType } from "./modelType.ts";
+import { findOrCreateOneCreator } from "./creator.ts";
 
 export async function upsertOneModelVersion(
   modelId: Models_Model,
@@ -27,15 +29,20 @@ export async function upsertOneModelVersion(
   const baseModelRecord = await findOrCreateOneBaseModel(
     modelVersion.baseModel,
   );
+
   const baseModelTypeRecord = modelVersion.baseModelType
     ? await findOrCreateOneBaseModelType(
       modelVersion.baseModelType,
       baseModelRecord.id,
     )
-    : undefined;
-  const modelIdRecord = await findOrCreateOneModelId(modelId);
+    : null;
+  const modelRecord = await findOrCreateOneModelId(
+    modelId,
+    await findOrCreateOneModelType(modelId.type),
+    modelId.creator ? await findOrCreateOneCreator(modelId.creator) : undefined,
+  );
 
-  const record = await prisma.modelVersion.upsert({
+  return (await prisma.modelVersion.upsert({
     where: {
       id: modelVersion.id,
     },
@@ -48,7 +55,7 @@ export async function upsertOneModelVersion(
     },
     create: {
       id: modelVersion.id,
-      modelId: modelIdRecord.id,
+      modelId: modelRecord.id,
       name: modelVersion.name,
       baseModelId: baseModelRecord.id,
       baseModelTypeId: baseModelTypeRecord ? baseModelTypeRecord.id : undefined,
@@ -81,9 +88,7 @@ export async function upsertOneModelVersion(
         })),
       },
     },
-  });
-
-  return record;
+  }))
 }
 
 export async function deleteOneModelVersion(
@@ -119,9 +124,9 @@ type ModelInfo = {
 };
 
 /**
- * 从.safetensors文件路径中提取模型信息（支持批量处理）
- * @param filePaths 文件路径数组
- * @returns 包含模型信息的数组，无效路径会被过滤
+ * Extracts an array of basic model info by reading their related folders and file.
+ * @param filePaths file path array
+ * @returns An array contains some basic model info, will exclude invalid files.
  */
 export function extractAllModelInfo(filePaths: string[]): ModelInfo[] {
   return filePaths

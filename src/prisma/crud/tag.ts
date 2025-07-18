@@ -1,12 +1,11 @@
-import { getPrismaClient } from "@server/settings";
+import { prisma } from "#prisma/client.ts";
 
-export async function searchTag(tag: string) {
-  const result = await getPrismaClient().tag.findMany({
+export function searchTag(tag: string) {
+  return prisma.tag.findMany({
     where: {
       name: {
         contains: tag,
       },
     },
   });
-  return result;
 }

@@ -1,16 +1,16 @@
-import type { ModelId_Model } from "#shared/models/civitai/mod.ts";
-import { LocalModels_RequestOpts } from "#shared/models/orpc.ts";
+import type {
+  ModelId_Model,
+  Models_RequestOpts,
+} from "#shared/models/civitai/mod.ts";
 import { prisma } from "../client.ts";
-import { findOrCreateOneCreator } from "./creator.ts";
-import { findOrCreateOneModelType } from "./modelType.ts";
+import { Prisma } from "#prisma/generated/client.ts";
 
-export async function findOrCreateOneModelId(modelId: ModelId_Model) {
-  const creatorRecord = modelId.creator
-    ? await findOrCreateOneCreator(modelId.creator)
-    : undefined;
-  const modelTypeRecord = await findOrCreateOneModelType(modelId.type);
-
-  const record = await prisma.model.upsert({
+export function findOrCreateOneModelId(
+  modelId: ModelId_Model,
+  modelType: Prisma.ModelTypeModel,
+  creator?: Prisma.CreatorModel,
+) {
+  return prisma.model.upsert({
     where: {
       id: modelId.id,
     },
@@ -18,8 +18,8 @@ export async function findOrCreateOneModelId(modelId: ModelId_Model) {
     create: {
       id: modelId.id,
       name: modelId.name,
-      creatorId: creatorRecord ? creatorRecord.id : undefined,
-      typeId: modelTypeRecord.id,
+      creatorId: creator ? creator.id : null,
+      typeId: modelType.id,
       nsfw: modelId.nsfw,
       nsfwLevel: modelId.nsfwLevel,
       tags: {
@@ -30,10 +30,9 @@ export async function findOrCreateOneModelId(modelId: ModelId_Model) {
       },
     },
   });
-  return record;
 }
 
-export async function findManyModels(params: LocalModels_RequestOpts) {
+export async function findManyModels(params: Models_RequestOpts) {
   const [records, totalCount] = await prisma.$transaction([
     prisma.model.findMany({
       where: {
@@ -60,7 +59,9 @@ export async function findManyModels(params: LocalModels_RequestOpts) {
           },
         },
       },
-      skip: (params.page - 1) * params.limit,
+      skip: params.page && params.limit
+        ? (params.page - 1) * params.limit
+        : undefined,
       take: params.limit,
 
       include: {

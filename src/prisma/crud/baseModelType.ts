@@ -1,10 +1,10 @@
 import { prisma } from "../client.ts";
 
-export async function findOrCreateOneBaseModelType(
+export function findOrCreateOneBaseModelType(
   baseModelTypeString: string,
   baseModelId: number,
 ) {
-  const record = await prisma.baseModelType.upsert({
+  return prisma.baseModelType.upsert({
     where: {
       name: baseModelTypeString,
     },
@@ -14,5 +14,4 @@ export async function findOrCreateOneBaseModelType(
       baseModelId: baseModelId,
     },
   });
-  return record;
 }

@@ -1,13 +1,9 @@
-import { useState } from "react";
-import { type Models_Model } from "#shared/models/civitai/mod.ts";
 import {
-  Card,
   Checkbox,
   Col,
   type GetProp,
   Input,
   Layout,
-  List,
   Popover,
   Row,
   Select,
@@ -15,6 +11,7 @@ import {
 } from "antd";
 import { KeyOutlined, SortAscendingOutlined } from "@ant-design/icons";
 import "./App.css";
+import Gallery from "./components/Gallery.tsx";
 
 const { Search } = Input;
 const { Header, Footer, Sider, Content } = Layout;
@@ -157,6 +154,7 @@ const App = () => (
   <div>
     <Layout style={layoutStyle}>
       <Content style={contentStyle}>
+        <Gallery></Gallery>
       </Content>
       <Footer style={footerStyle}>
         <SearchBar></SearchBar>

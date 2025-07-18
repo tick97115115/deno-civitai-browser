@@ -1,7 +1,7 @@
 import { prisma } from "../client.ts";
 
-export async function findOrCreateOneModelType(modelTypeString: string) {
-  const record = await prisma.modelType.upsert({
+export function findOrCreateOneModelType(modelTypeString: string) {
+  return prisma.modelType.upsert({
     where: {
       name: modelTypeString,
     },
@@ -10,5 +10,4 @@ export async function findOrCreateOneModelType(modelTypeString: string) {
       name: modelTypeString,
     },
   });
-  return record;
 }
