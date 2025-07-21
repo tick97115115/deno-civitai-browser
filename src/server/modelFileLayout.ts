@@ -3,14 +3,17 @@ import settings from "#settings";
 import type {
   Models_File,
   Models_Image,
-  Models_ModelVersion,
   ModelTypes,
 } from "#shared/models/civitai/mod.ts";
-import { Models_ModelVersionSchema } from "#shared/models/civitai/mod.ts";
-import { basename, dirname, join } from "@std/path";
-import { expandGlob } from "@std/fs";
+import {
+  Models_ModelSchema,
+  Models_ModelVersionSchema,
+} from "#shared/models/civitai/mod.ts";
+import { join, SEPARATOR } from "@std/path";
+import { expandGlob, ExpandGlobOptions } from "@std/fs";
 import { extractFilenameFromUrl } from "#shared/utils.ts";
 import { exists } from "@std/fs/exists";
+import { upsertOneModelVersion } from "#prisma/crud/modelVersion.ts"
 
 /**
  * The layout of directory:
@@ -77,33 +80,129 @@ export function getMediaPath(image: Models_Image) {
   return join(settings.MODELS_DIR, "media", extractFilenameFromUrl(image.url));
 }
 
-export async function getModelVersionInfoByModelFilePath(modelFile: string) {
-  const dir = dirname(modelFile);
-  const versionId = basename(dir);
-  const versionInfoJsonFilePath = join(dir, versionId + modelJsonFileSuffix);
-  if (!(await exists(versionInfoJsonFilePath, { isFile: true }))) {
-    // process about how to handle not exists
-  }
-  const out = Models_ModelVersionSchema(
-    await import(versionInfoJsonFilePath, { with: { type: "json" } }),
+type ModelMetaInfo = {
+  filePath: string;
+  modelType: ModelTypes;
+  modelId: number;
+  versionId: number;
+  versionJsonPath: string;
+  modelJsonPath: string;
+};
+
+export async function getModelVersionInfoByModelFilePath(
+  modelFile: string,
+): Promise<ModelMetaInfo> {
+  const meta: ModelMetaInfo = {
+    filePath: modelFile,
+    modelType: "Other", // default value, will be updated later
+    modelId: 0, // default value, will be updated later
+    versionId: 0, // default value, will be updated later
+    versionJsonPath: "",
+    modelJsonPath: "",
+  };
+
+  const parts = modelFile.split(SEPARATOR);
+
+  meta.versionId = parseInt(parts[parts.length - 1], 10);
+  meta.modelId = parseInt(parts[parts.length - 2], 10);
+  meta.modelType = parts[parts.length - 3] as ModelTypes;
+
+  // parse model version json
+  meta.versionJsonPath = getModelVersionJsonPath(
+    meta.modelType,
+    meta.modelId,
+    meta.versionId,
   );
-  if (out instanceof type.errors) {
-    console.log(out.summary);
-    out.throw();
-  } else {
+  if (!(await exists(meta.versionJsonPath, { isFile: true }))) {
+    // process about how to handle not exists
+    meta.versionJsonPath = "";
   }
+
+  // parse model json
+  meta.modelJsonPath = getModelJsonPath(meta.modelType, meta.modelId);
+  if (!(await exists(meta.modelJsonPath, { isFile: true }))) {
+    // process about how to handle not exists
+    meta.modelJsonPath = "";
+  }
+  return meta;
 }
 
-export async function scanModels(modelsDir: string) {
+type countLocalModelsResult = {
+  total: number;
+};
+export async function countLocalModels(
+  modelsDir: string,
+): Promise<countLocalModelsResult> {
+  let total = 0;
+  const expandGlobOptions: ExpandGlobOptions = {
+    root: modelsDir,
+    includeDirs: true,
+  };
   for await (
-    const modelFile of expandGlob("*.safetensors", {
-      root: modelsDir,
-      includeDirs: true,
-    })
+    const modelFile of expandGlob("*.safetensors", expandGlobOptions)
   ) {
     // read modelVersion.api-info.json and model.api-info.json files then record them into database.
-    modelFile.path;
+    const meta = await getModelVersionInfoByModelFilePath(modelFile.path);
     // we need two functions, one of them will check if modelVersion.api-info.json exists and read them
     // the other function will do the same thing but to model.api-info.json.
+    if (meta.versionJsonPath && meta.modelJsonPath) {
+      total++;
+    } else {
+      total++;
+      console.warn(
+        `Model or version JSON not found for file: ${modelFile.path}`,
+      );
+    }
+  }
+  return { total };
+}
+
+/**
+ * Use it after run "prisma reset" command!!!
+ * It's aimed to scan local models directory and sync them to database.
+ */
+export async function scanLocalModels(): Promise<void> {
+  const modelsDir = settings.MODELS_DIR;
+  if (!(await exists(modelsDir, { isDirectory: true }))) {
+    console.warn(`Models directory does not exist: ${modelsDir}`);
+    return;
+  }
+
+  const expandGlobOptions: ExpandGlobOptions = {
+    root: modelsDir,
+    includeDirs: true,
+  };
+
+  for await (
+    const modelFile of expandGlob("*.safetensors", expandGlobOptions)
+  ) {
+    // read modelVersion.api-info.json and model.api-info.json files then record them into database.
+    const meta = await getModelVersionInfoByModelFilePath(modelFile.path);
+    if (meta.versionJsonPath === "" || meta.modelJsonPath == "") {
+      console.warn(
+        `Model or version JSON not found for file: ${modelFile.path}`,
+      );
+      continue;
+    }
+    const modelVersionInfo = Models_ModelVersionSchema(
+      await import(meta.versionJsonPath, { with: { type: "json" } }),
+    );
+    // Validate the model version
+    const modelInfo = Models_ModelSchema(
+      await import(meta.modelJsonPath, { with: { type: "json" } }),
+    );
+    // Here you can call your upsert function to save the model and version
+    // await upsertModelAndVersion(model, modelVersion);
+    if (
+      modelVersionInfo instanceof type.errors ||
+      modelInfo instanceof type.errors
+    ) {
+      console.error(
+        `Invalid model or version json for file: ${modelFile.path}`,
+      );
+      continue;
+    }
+    // Upsert the model version into the database
+    await upsertOneModelVersion(modelInfo, modelVersionInfo);
   }
 }
