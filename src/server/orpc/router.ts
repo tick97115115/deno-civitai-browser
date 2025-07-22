@@ -24,3 +24,4 @@ export const router = {
     getSettings,
   },
 };
+export type Router = typeof router;

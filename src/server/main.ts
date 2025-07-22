@@ -4,20 +4,38 @@ import { OpenAPIHandler } from "@orpc/openapi/node";
 import { CORSPlugin } from "@orpc/server/plugins";
 import { router } from "./orpc/router.ts";
 import { onError } from "@orpc/server";
+import { RPCHandler } from '@orpc/server/node'
 
 const app = express();
 app.use(cors());
 
-const handler = new OpenAPIHandler(router, {
+// ORPC middleware
+const handler = new RPCHandler(router)
+
+app.use('/orpc', async (req, res, next) => {
+  const { matched } = await handler.handle(req, res, {
+    prefix: '/orpc',
+    context: {},
+  })
+
+  if (matched) {
+    return
+  }
+
+  next()
+})
+
+// ORPC OpenAPI setup
+const OpenAPIEndpoint = new OpenAPIHandler(router, {
   plugins: [new CORSPlugin()],
   interceptors: [
     onError((error) => console.error(error)),
   ],
 });
 
-app.use("/orpc*", async (req, res, next) => {
-  const { matched } = await handler.handle(req, res, {
-    prefix: "/orpc",
+app.use("/openapi", async (req, res, next) => {
+  const { matched } = await OpenAPIEndpoint.handle(req, res, {
+    prefix: "/openapi",
     context: {},
   });
 
@@ -29,5 +47,5 @@ app.use("/orpc*", async (req, res, next) => {
 });
 
 if (import.meta.main) {
-  app.listen(3000, () => console.log("Server listening on port 3000"));
+  app.listen(3001, "127.0.0.1", () => console.log(`Server listening on port 3001`));
 }

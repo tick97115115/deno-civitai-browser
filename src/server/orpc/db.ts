@@ -1,17 +1,12 @@
 import { type } from "arktype";
-import { ORPCError, os } from "@orpc/server";
-import {
-  LocalModels_RequestOptsSchema,
-  LocalModels_ResponseSchema,
-} from "#shared/models/orpc.ts";
-import { Models_ModelSchema } from "#shared/models/civitai/mod.ts";
-import { status } from "http-status";
+import { os } from "@orpc/server";
+import { Models_ModelSchema, Models_ResponseSchema, Models_RequestOptsSchema } from "#shared/models/civitai/mod.ts";
 
 export const queryLocalModels = os
   .route({ method: "GET", path: "/db/models" }).input(
-    LocalModels_RequestOptsSchema,
+    Models_RequestOptsSchema,
   )
-  .output(LocalModels_ResponseSchema).handler(async ({ input, context }) => {
+  .output(Models_ResponseSchema).handler(async ({ input, context }) => {
     throw new Error("unimplemented!");
   });
 

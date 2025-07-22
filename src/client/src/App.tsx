@@ -12,6 +12,8 @@ import {
 import { KeyOutlined, SortAscendingOutlined } from "@ant-design/icons";
 import "./App.css";
 import Gallery from "./components/Gallery.tsx";
+import OrpcInteract from "./examples/orpcClient.tsx";
+import ViteVarianble from "./examples/viteVariable.tsx";
 
 const { Search } = Input;
 const { Header, Footer, Sider, Content } = Layout;
@@ -154,7 +156,9 @@ const App = () => (
   <div>
     <Layout style={layoutStyle}>
       <Content style={contentStyle}>
-        <Gallery></Gallery>
+        {/* <Gallery></Gallery> */}
+        <OrpcInteract></OrpcInteract>
+        <ViteVarianble></ViteVarianble>
       </Content>
       <Footer style={footerStyle}>
         <SearchBar></SearchBar>

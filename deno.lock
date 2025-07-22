@@ -10,6 +10,8 @@
     "npm:@ant-design/v5-patch-for-react-19@^1.0.3": "1.0.3_antd@5.26.5__react@19.1.0__react-dom@19.1.0___react@19.1.0__dayjs@1.11.13_react@19.1.0_react-dom@19.1.0__react@19.1.0",
     "npm:@deno/vite-plugin@^1.0.5": "1.0.5_vite@7.0.5__picomatch@4.0.3_@types+node@22.15.15",
     "npm:@orpc/client@^1.7.2": "1.7.2",
+    "npm:@orpc/contract@^1.7.4": "1.7.4",
+    "npm:@orpc/openapi-client@^1.7.4": "1.7.4",
     "npm:@orpc/openapi@^1.7.2": "1.7.2",
     "npm:@orpc/server@^1.7.2": "1.7.2",
     "npm:@prisma/client@^6.12.0": "6.12.0_prisma@6.12.0",
@@ -35,6 +37,7 @@
     "npm:react-dom@^19.1.0": "19.1.0_react@19.1.0",
     "npm:react-router-dom@^7.7.0": "7.7.0_react@19.1.0_react-dom@19.1.0__react@19.1.0",
     "npm:react@^19.1.0": "19.1.0",
+    "npm:vite@*": "7.0.5_picomatch@4.0.3_@types+node@22.15.15",
     "npm:vite@^7.0.5": "7.0.5_picomatch@4.0.3_@types+node@22.15.15"
   },
   "jsr": {
@@ -652,17 +655,35 @@
     "@orpc/client@1.7.2": {
       "integrity": "sha512-uup/TKm6SDv6ATCwdiYT62SkzEIs2MDIl+wBb5l0DkgavfjVSDHBu+aJJQAZ0cDr2xxmsdntXbEVHCzlXhxTyA==",
       "dependencies": [
-        "@orpc/shared",
-        "@orpc/standard-server",
-        "@orpc/standard-server-fetch",
-        "@orpc/standard-server-peer"
+        "@orpc/shared@1.7.2",
+        "@orpc/standard-server@1.7.2",
+        "@orpc/standard-server-fetch@1.7.2",
+        "@orpc/standard-server-peer@1.7.2"
+      ]
+    },
+    "@orpc/client@1.7.4": {
+      "integrity": "sha512-74wUIp3/LWmYU7ENhUVtHvF3KNcobA3rikPHg2q4fmtcczgdn6R/cKv1rbYKKPkGFpyY9LDk0K7zjbeNbN4IFA==",
+      "dependencies": [
+        "@orpc/shared@1.7.4",
+        "@orpc/standard-server@1.7.4",
+        "@orpc/standard-server-fetch@1.7.4",
+        "@orpc/standard-server-peer@1.7.4"
       ]
     },
     "@orpc/contract@1.7.2": {
       "integrity": "sha512-ekjQhP9X17i6cauVbQ751EWy5Vu8V9cxV9NGjar3OcOEOjnHS2t7DHZhbBABPaybp9QjUYurOevZUBRQ2sY9DQ==",
       "dependencies": [
-        "@orpc/client",
-        "@orpc/shared",
+        "@orpc/client@1.7.2",
+        "@orpc/shared@1.7.2",
+        "@standard-schema/spec",
+        "openapi-types"
+      ]
+    },
+    "@orpc/contract@1.7.4": {
+      "integrity": "sha512-lQAYxo1WZYfEc/WsB0aluc1v0tuAVPmZponhQPK0DdB3MNR9x0wys4Wldf5xtnZ47ilFVt2p1w59qAjR/DwA8g==",
+      "dependencies": [
+        "@orpc/client@1.7.4",
+        "@orpc/shared@1.7.4",
         "@standard-schema/spec",
         "openapi-types"
       ]
@@ -670,21 +691,30 @@
     "@orpc/openapi-client@1.7.2": {
       "integrity": "sha512-h0lDdOaOEudtYQ9mCGIElZUEWkx3rDVc6cgeKpnLps8NMuZ9qSaZNS64qCCoNQrFSl6uHuEnGgp3fGKTWrKeKA==",
       "dependencies": [
-        "@orpc/client",
-        "@orpc/contract",
-        "@orpc/shared",
-        "@orpc/standard-server"
+        "@orpc/client@1.7.2",
+        "@orpc/contract@1.7.2",
+        "@orpc/shared@1.7.2",
+        "@orpc/standard-server@1.7.2"
+      ]
+    },
+    "@orpc/openapi-client@1.7.4": {
+      "integrity": "sha512-G587hb4L3fSMvQY3R5151YZ0PqM23JSfEhUmZsq9QpLiARrDmnUfSKsrGQbv2WZRulX8l1A3fLbZp/lAJ5iLkg==",
+      "dependencies": [
+        "@orpc/client@1.7.4",
+        "@orpc/contract@1.7.4",
+        "@orpc/shared@1.7.4",
+        "@orpc/standard-server@1.7.4"
       ]
     },
     "@orpc/openapi@1.7.2": {
       "integrity": "sha512-3dwYIR8L84fQ+06LqQD21ziF3R7cAGWIk+C/m2dity2LBiKvxHh4HBiWEMNMavyvJ649okvng6vQCfqhTmfLdw==",
       "dependencies": [
-        "@orpc/client",
-        "@orpc/contract",
-        "@orpc/openapi-client",
+        "@orpc/client@1.7.2",
+        "@orpc/contract@1.7.2",
+        "@orpc/openapi-client@1.7.2",
         "@orpc/server",
-        "@orpc/shared",
-        "@orpc/standard-server",
+        "@orpc/shared@1.7.2",
+        "@orpc/standard-server@1.7.2",
         "json-schema-typed",
         "rou3"
       ]
@@ -692,14 +722,14 @@
     "@orpc/server@1.7.2": {
       "integrity": "sha512-G9AtnCvcS2iEjpCSvZ77ToooGGM9EBrJ86Cb37eBV5AawYpHqEKl7EuPsaET5bFopggmPbWl3T/Bd2lPpRM+1A==",
       "dependencies": [
-        "@orpc/client",
-        "@orpc/contract",
-        "@orpc/shared",
-        "@orpc/standard-server",
+        "@orpc/client@1.7.2",
+        "@orpc/contract@1.7.2",
+        "@orpc/shared@1.7.2",
+        "@orpc/standard-server@1.7.2",
         "@orpc/standard-server-aws-lambda",
-        "@orpc/standard-server-fetch",
+        "@orpc/standard-server-fetch@1.7.2",
         "@orpc/standard-server-node",
-        "@orpc/standard-server-peer"
+        "@orpc/standard-server-peer@1.7.2"
       ]
     },
     "@orpc/shared@1.7.2": {
@@ -709,41 +739,68 @@
         "type-fest"
       ]
     },
+    "@orpc/shared@1.7.4": {
+      "integrity": "sha512-CUEsKZcCPENheqAJqhH6tG/wTCrGHUmWD5nro6afiVC/H8ujb5cI7HVvZxn4nXh4Vw2W7fxBiY4cx7sKGUm1vg==",
+      "dependencies": [
+        "radash",
+        "type-fest"
+      ]
+    },
     "@orpc/standard-server-aws-lambda@1.7.2": {
       "integrity": "sha512-SA6AyLm/Km9GKX09k/vV9dv4CK52HJCvKi+UgRte27VVk47YsmSqqwzCky5AMFYFOQ6I9M5wBsSC81OqGE4ncg==",
       "dependencies": [
-        "@orpc/shared",
-        "@orpc/standard-server",
-        "@orpc/standard-server-fetch",
+        "@orpc/shared@1.7.2",
+        "@orpc/standard-server@1.7.2",
+        "@orpc/standard-server-fetch@1.7.2",
         "@orpc/standard-server-node"
       ]
     },
     "@orpc/standard-server-fetch@1.7.2": {
       "integrity": "sha512-H/6Lwe7V5hwmFLcThkcZM5DIfYF30ysAAwZxwV7xKq674el6pMTFQCMbP0d/UhDeegs/9omqZigY5+cqht+RuQ==",
       "dependencies": [
-        "@orpc/shared",
-        "@orpc/standard-server"
+        "@orpc/shared@1.7.2",
+        "@orpc/standard-server@1.7.2"
+      ]
+    },
+    "@orpc/standard-server-fetch@1.7.4": {
+      "integrity": "sha512-BpuknICqaIX7oUZDjTW8r6XIgTaG7sd7Y7jTTT7Ci4S30/VGAYPfJtZV9MJjpdglBMiLQOSbFoseWb9WnGQqKA==",
+      "dependencies": [
+        "@orpc/shared@1.7.4",
+        "@orpc/standard-server@1.7.4"
       ]
     },
     "@orpc/standard-server-node@1.7.2": {
       "integrity": "sha512-Je/yhedlCAjzTq5nw/9B1G3GwIT3Tllf7urQKHTi1ZA1tR03+NvU811cLt/DRR3DNLxjrnVsauhXsPVvuAWFHg==",
       "dependencies": [
-        "@orpc/shared",
-        "@orpc/standard-server",
-        "@orpc/standard-server-fetch"
+        "@orpc/shared@1.7.2",
+        "@orpc/standard-server@1.7.2",
+        "@orpc/standard-server-fetch@1.7.2"
       ]
     },
     "@orpc/standard-server-peer@1.7.2": {
       "integrity": "sha512-gIFMIxCHAfRiJblEJmTP3CXKk2KFRyhOjED/QxIU2KhwUl2pAokeDhUmaxXIhpCaTCX4RpmoJJz8jO5t8oAtHA==",
       "dependencies": [
-        "@orpc/shared",
-        "@orpc/standard-server"
+        "@orpc/shared@1.7.2",
+        "@orpc/standard-server@1.7.2"
+      ]
+    },
+    "@orpc/standard-server-peer@1.7.4": {
+      "integrity": "sha512-EVx4nm3HGq4072s4CadTtbv9c/Mf2NW3TL7o8tRqUMyrhBpF20mfRmw982s8S1iYBCC33ObUT5v+prhJ09pSpw==",
+      "dependencies": [
+        "@orpc/shared@1.7.4",
+        "@orpc/standard-server@1.7.4"
       ]
     },
     "@orpc/standard-server@1.7.2": {
       "integrity": "sha512-W0KwJdpzyMhhiOKKTxT/CXJylGIKhqzh8B/5dUpAYtireLUw6fQ9IbV5LdPYPL5vlYRv/fcF9E+lSgIJpYGrmg==",
       "dependencies": [
-        "@orpc/shared"
+        "@orpc/shared@1.7.2"
+      ]
+    },
+    "@orpc/standard-server@1.7.4": {
+      "integrity": "sha512-O0R18fMwCL9BqnCPJELiRpCo+vEB7QA+pqlPiH4J3FNWrJuNv5cVzjJ8/iXuaXMXxXRH51H03EKjsCW4uq8dUA==",
+      "dependencies": [
+        "@orpc/shared@1.7.4"
       ]
     },
     "@pkgjs/parseargs@0.11.0": {
@@ -3420,6 +3477,8 @@
       "npm:@ant-design/v5-patch-for-react-19@^1.0.3",
       "npm:@deno/vite-plugin@^1.0.5",
       "npm:@orpc/client@^1.7.2",
+      "npm:@orpc/contract@^1.7.4",
+      "npm:@orpc/openapi-client@^1.7.4",
       "npm:@orpc/openapi@^1.7.2",
       "npm:@orpc/server@^1.7.2",
       "npm:@prisma/client@^6.12.0",

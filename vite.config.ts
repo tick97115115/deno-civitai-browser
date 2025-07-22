@@ -7,9 +7,6 @@ import "react-dom";
 
 export default defineConfig({
   root: "./src/client",
-  server: {
-    port: 3000,
-  },
   plugins: [
     react(),
     deno(),
