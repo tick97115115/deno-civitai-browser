@@ -4,7 +4,10 @@
     "vite:build": "deno run -A --node-modules-dir=auto npm:vite build",
     "vite:dev": "deno run -A --node-modules-dir=auto npm:vite",
     "server:dev": "deno run -A --node-modules-dir --watch ./src/server/main.ts",
-    "dev": "deno task vite:dev && deno task server:dev"
+    "dev": "deno task vite:dev && deno task server:dev",
+    "prisma:reset": "deno run -A npm:prisma migrate reset --force",
+    "prisma:generate": "deno run -A npm:prisma generate",
+    "prisma:migrate": "deno run -A npm:prisma migrate dev"
   },
   "compilerOptions": {
     "types": ["react", "react-dom", "express", "cors", "immer"],

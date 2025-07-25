@@ -16,7 +16,7 @@ const rateLimit = base.middleware(async ({ next, errors }) => {
     message: "You are being rate limited",
     data: { retryAfter: 60 },
   });
-  return next();
+  // return next();
 });
 
 const example = base

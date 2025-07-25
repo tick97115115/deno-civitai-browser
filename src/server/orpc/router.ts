@@ -1,23 +1,23 @@
 import {
-  addOneModelRecord,
-  deleteOneModelRecord,
-  queryLocalModels,
-  scanLocalModels,
-  updateOneModelRecord,
+  addOneModelRecordRoute,
+  deleteOneModelRecordRoute,
+  queryLocalModelsRoute,
+  scanLocalModelsRoute,
+  updateOneModelRecordRoute,
 } from "./db.ts";
 import { getSettings, newSettings } from "./settings.ts";
 
 export const router = {
   db: {
     model: {
-      addOneModelRecord,
-      updateOneModelRecord,
-      deleteOneModelRecord,
+      addOneModelRecordRoute,
+      updateOneModelRecordRoute,
+      deleteOneModelRecordRoute,
     },
-    models: {
-      queryLocalModels,
-      scanLocalModels,
-    },
+  },
+  models: {
+    queryLocalModelsRoute,
+    scanLocalModelsRoute,
   },
   settings: {
     newSettings,

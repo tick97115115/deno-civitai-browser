@@ -1,8 +1,13 @@
 import { type } from "arktype";
 import { os } from "@orpc/server";
-import { Models_ModelSchema, Models_ResponseSchema, Models_RequestOptsSchema } from "#shared/models/civitai/mod.ts";
+import {
+  Models_ModelSchema,
+  Models_RequestOptsSchema,
+  Models_ResponseSchema,
+} from "#shared/models/civitai/mod.ts";
+import { scanLocalModels } from "../modelFileLayout.ts";
 
-export const queryLocalModels = os
+export const queryLocalModelsRoute = os
   .route({ method: "GET", path: "/db/models" }).input(
     Models_RequestOptsSchema,
   )
@@ -10,7 +15,7 @@ export const queryLocalModels = os
     throw new Error("unimplemented!");
   });
 
-export const addOneModelRecord = os
+export const addOneModelRecordRoute = os
   .route({
     method: "POST",
     path: "/db/model",
@@ -20,7 +25,7 @@ export const addOneModelRecord = os
     },
   );
 
-export const updateOneModelRecord = os
+export const updateOneModelRecordRoute = os
   .route({
     method: "PUT",
     path: "/db/model",
@@ -33,7 +38,7 @@ export const updateOneModelRecord = os
     throw new Error("unimplemented!");
   });
 
-export const deleteOneModelRecord = os
+export const deleteOneModelRecordRoute = os
   .route({
     method: "DELETE",
     path: "/db/model",
@@ -44,12 +49,13 @@ export const deleteOneModelRecord = os
     throw new Error("unimplemented!");
   });
 
-export const scanLocalModels = os
+export const scanLocalModelsRoute = os
   .route({
     method: "GET",
     path: "/db/models/scan",
   }).output(type({ new_models_count: "number.integer" })).handler(
-    async ({ Input, context }) => {
-      throw new Error("unimplemented!");
+    async ({ input, context }) => {
+      const count = await scanLocalModels();
+      return { new_models_count: count };
     },
-  );
+  ).callable({ context: {} });

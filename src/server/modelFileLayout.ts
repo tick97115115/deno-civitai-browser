@@ -13,7 +13,7 @@ import { join, SEPARATOR } from "@std/path";
 import { expandGlob, ExpandGlobOptions } from "@std/fs";
 import { extractFilenameFromUrl } from "#shared/utils.ts";
 import { exists } from "@std/fs/exists";
-import { upsertOneModelVersion } from "#prisma/crud/modelVersion.ts"
+import { upsertOneModelVersion } from "#prisma/crud/modelVersion.ts";
 
 /**
  * The layout of directory:
@@ -161,11 +161,12 @@ export async function countLocalModels(
  * Use it after run "prisma reset" command!!!
  * It's aimed to scan local models directory and sync them to database.
  */
-export async function scanLocalModels(): Promise<void> {
+export async function scanLocalModels(): Promise<number> {
+  let total = 0;
   const modelsDir = settings.MODELS_DIR;
   if (!(await exists(modelsDir, { isDirectory: true }))) {
     console.warn(`Models directory does not exist: ${modelsDir}`);
-    return;
+    throw new Error(`Models directory does not exist: ${modelsDir}`);
   }
 
   const expandGlobOptions: ExpandGlobOptions = {
@@ -204,5 +205,8 @@ export async function scanLocalModels(): Promise<void> {
     }
     // Upsert the model version into the database
     await upsertOneModelVersion(modelInfo, modelVersionInfo);
+
+    total++;
   }
+  return total;
 }

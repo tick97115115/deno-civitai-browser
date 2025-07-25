@@ -42,7 +42,7 @@ export async function upsertOneModelVersion(
     modelId.creator ? await findOrCreateOneCreator(modelId.creator) : undefined,
   );
 
-  return (await prisma.modelVersion.upsert({
+  return prisma.modelVersion.upsert({
     where: {
       id: modelVersion.id,
     },
@@ -88,7 +88,7 @@ export async function upsertOneModelVersion(
         })),
       },
     },
-  }))
+  })
 }
 
 export async function deleteOneModelVersion(
