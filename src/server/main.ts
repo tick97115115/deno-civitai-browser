@@ -5,6 +5,8 @@ import { CORSPlugin } from "@orpc/server/plugins";
 import { router } from "./orpc/router.ts";
 import { onError } from "@orpc/server";
 import { RPCHandler } from '@orpc/server/node'
+import { join } from "@std/path";
+import settings from "#settings";
 
 const app = express();
 app.use(cors());
@@ -44,6 +46,17 @@ app.use("/openapi", async (req, res, next) => {
   }
 
   next();
+});
+
+app.use("/media/:filename", (req, res, next) => {
+  const { filename } = req.params;
+  next();
+  res.sendFile(filename, { root: join(settings.MODELS_DIR, "media") }, (err) => {
+    if (err) {
+      console.error("File not found:", err);
+      res.status(404).send("File not found");
+    }
+  });
 });
 
 if (import.meta.main) {
