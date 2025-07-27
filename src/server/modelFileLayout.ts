@@ -164,7 +164,7 @@ export async function countLocalModels(
 export async function scanLocalModels(): Promise<number> {
   let total = 0;
   const modelsDir = settings.MODELS_DIR;
-  if (!(await exists(modelsDir, { isDirectory: true }))) {
+  if (await exists(modelsDir, { isDirectory: true }) !== true) {
     console.warn(`Models directory does not exist: ${modelsDir}`);
     throw new Error(`Models directory does not exist: ${modelsDir}`);
   }
@@ -174,8 +174,9 @@ export async function scanLocalModels(): Promise<number> {
     includeDirs: true,
   };
 
+  const asyncItorator = expandGlob("*.safetensors", expandGlobOptions)
   for await (
-    const modelFile of expandGlob("*.safetensors", expandGlobOptions)
+    const modelFile of asyncItorator
   ) {
     // read modelVersion.api-info.json and model.api-info.json files then record them into database.
     const meta = await getModelVersionInfoByModelFilePath(modelFile.path);

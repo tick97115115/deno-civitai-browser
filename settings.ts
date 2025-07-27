@@ -1,6 +1,7 @@
 import Conf from "conf";
 import { join } from "node:path";
 import { type Settings, SettingsSchema } from "#shared/models/settings.ts";
+// import "@std/dotenv/load"
 
 type ConfigAccess = {
   get store(): Settings;
