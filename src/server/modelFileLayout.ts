@@ -171,10 +171,10 @@ export async function scanLocalModels(): Promise<number> {
 
   const expandGlobOptions: ExpandGlobOptions = {
     root: modelsDir,
-    includeDirs: true,
+    includeDirs: false,
   };
 
-  const asyncItorator = expandGlob("*.safetensors", expandGlobOptions)
+  const asyncItorator = expandGlob("**/*.safetensors", expandGlobOptions);
   for await (
     const modelFile of asyncItorator
   ) {
