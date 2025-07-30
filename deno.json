@@ -43,6 +43,7 @@
     "cors": "npm:cors@^2.8.5",
     "es-toolkit": "npm:es-toolkit@^1.39.6",
     "express": "npm:express@^5.1.0",
+    "file-url": "npm:file-url@^4.0.0",
     "http-status": "npm:http-status@^2.1.0",
     "immer": "npm:immer@^10.1.1",
     "install": "npm:install@^0.13.0",

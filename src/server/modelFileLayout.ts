@@ -1,4 +1,4 @@
-import { type } from "arktype";
+import { ArkErrors, type } from "arktype";
 import settings from "#settings";
 import type {
   Models_File,
@@ -14,6 +14,7 @@ import { expandGlob, ExpandGlobOptions } from "@std/fs";
 import { extractFilenameFromUrl } from "#shared/utils.ts";
 import { exists } from "@std/fs/exists";
 import { upsertOneModelVersion } from "#prisma/crud/modelVersion.ts";
+import fileUrl from "file-url";
 
 /**
  * The layout of directory:
@@ -103,9 +104,9 @@ export async function getModelVersionInfoByModelFilePath(
 
   const parts = modelFile.split(SEPARATOR);
 
-  meta.versionId = parseInt(parts[parts.length - 1], 10);
-  meta.modelId = parseInt(parts[parts.length - 2], 10);
-  meta.modelType = parts[parts.length - 3] as ModelTypes;
+  meta.versionId = parseInt(parts[parts.length - 2], 10);
+  meta.modelId = parseInt(parts[parts.length - 3], 10);
+  meta.modelType = parts[parts.length - 4] as ModelTypes;
 
   // parse model version json
   meta.versionJsonPath = getModelVersionJsonPath(
@@ -186,19 +187,22 @@ export async function scanLocalModels(): Promise<number> {
       );
       continue;
     }
-    const modelVersionInfo = Models_ModelVersionSchema(
-      await import(meta.versionJsonPath, { with: { type: "json" } }),
-    );
+    const modelVersionObj = await import(fileUrl(meta.versionJsonPath), { with: { type: "json" } })
+    // for object that imported by import() function, you have to use default property to return it's data.
+    const modelVersionInfo = Models_ModelVersionSchema(modelVersionObj.default);
     // Validate the model version
-    const modelInfo = Models_ModelSchema(
-      await import(meta.modelJsonPath, { with: { type: "json" } }),
-    );
+    const modelInfoObj = await import(fileUrl(meta.modelJsonPath), { with: { type: "json" } })
+    const modelInfo = Models_ModelSchema(modelInfoObj.default);
     // Here you can call your upsert function to save the model and version
     // await upsertModelAndVersion(model, modelVersion);
     if (
       modelVersionInfo instanceof type.errors ||
       modelInfo instanceof type.errors
     ) {
+      console.log(`\nmodelVersionInfo error\n ${meta.versionJsonPath}`)
+      console.log((modelVersionInfo as ArkErrors).summary)
+      console.log(`\nModelInfo error\n ${meta.modelJsonPath}`)
+      console.log((modelInfo as ArkErrors).summary)
       console.error(
         `Invalid model or version json for file: ${modelFile.path}`,
       );

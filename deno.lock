@@ -27,6 +27,7 @@
     "npm:cors@^2.8.5": "2.8.5",
     "npm:es-toolkit@^1.39.6": "1.39.7",
     "npm:express@^5.1.0": "5.1.0",
+    "npm:file-url@4": "4.0.0",
     "npm:http-status@^2.1.0": "2.1.0",
     "npm:immer@^10.1.1": "10.1.1",
     "npm:install@0.13": "0.13.0",
@@ -34,6 +35,7 @@
     "npm:jotai@^2.12.5": "2.12.5_@types+react@19.1.8_react@19.1.0",
     "npm:npm@^11.4.2": "11.4.2",
     "npm:prisma@*": "6.12.0",
+    "npm:prisma@6.12.0": "6.12.0",
     "npm:prisma@^6.12.0": "6.12.0",
     "npm:react-dom@^19.1.0": "19.1.0_react@19.1.0",
     "npm:react-router-dom@^7.7.0": "7.7.0_react@19.1.0_react-dom@19.1.0__react@19.1.0",
@@ -1977,6 +1979,10 @@
         "picomatch"
       ],
       "tarball": "https://registry.npmmirror.com/fdir/-/fdir-6.4.6.tgz"
+    },
+    "file-url@4.0.0": {
+      "integrity": "sha512-vRCdScQ6j3Ku6Kd7W1kZk9c++5SqD6Xz5Jotrjr/nkY714M14RFHy/AAVA2WQvpsqVAVgTbDrYyBpU205F0cLw==",
+      "tarball": "https://registry.npmmirror.com/file-url/-/file-url-4.0.0.tgz"
     },
     "finalhandler@2.1.0": {
       "integrity": "sha512-/t88Ty3d5JWQbWYgaOGCCYfXRwV1+be02WqYYlL6h0lEiUAMPM8o8qKGO01YIkOHzka2up08wvgYD0mDiI+q3Q==",
@@ -4003,6 +4009,7 @@
       "npm:cors@^2.8.5",
       "npm:es-toolkit@^1.39.6",
       "npm:express@^5.1.0",
+      "npm:file-url@4",
       "npm:http-status@^2.1.0",
       "npm:immer@^10.1.1",
       "npm:install@0.13",
