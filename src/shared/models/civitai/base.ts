@@ -21,8 +21,8 @@ export const ModelTypesSchema = type.enumerated(
   "Detection",
 );
 export type ModelTypes = typeof ModelTypesSchema.infer;
-export const ModelTypesArray = ModelTypesSchema
-  .select("unit").map((u) => u.name);
+// @ts-ignore: type inference issue
+export const ModelTypesArray = ModelTypesSchema.json.map((obj: { unit: string }) => obj.unit);
 
 export const ModelsRequestPeriodSchema = type.enumerated(
   "AllTime",
@@ -32,8 +32,8 @@ export const ModelsRequestPeriodSchema = type.enumerated(
   "Year",
 );
 export type ModelsRequestPeriod = typeof ModelsRequestPeriodSchema.infer;
-export const ModelsRequestPeriodArray = ModelsRequestPeriodSchema
-  .select("unit").map((u) => u.name);
+// @ts-ignore: type inference issue
+export const ModelsRequestPeriodArray = ModelsRequestPeriodSchema.json.map((obj: { unit: string }) => obj.unit);
 
 export const AllowCommercialUseSchema = type.enumerated(
   "Image",
@@ -43,8 +43,8 @@ export const AllowCommercialUseSchema = type.enumerated(
   "None",
 );
 export type AllowCommercialUse = typeof AllowCommercialUseSchema.infer;
-export const AllowCommercialUseArray = AllowCommercialUseSchema
-  .select("unit").map((u) => u.name);
+// @ts-ignore: type inference issue
+export const AllowCommercialUseArray = AllowCommercialUseSchema.json.map((obj: { unit: string }) => obj.unit);
 
 export const ModelsRequestSortSchema = type.enumerated(
   "Highest Rated",
@@ -52,8 +52,8 @@ export const ModelsRequestSortSchema = type.enumerated(
   "Newest",
 );
 export type ModelsRequestSort = typeof ModelsRequestSortSchema.infer;
-export const ModelsRequestSortArray = ModelsRequestSortSchema
-  .select("unit").map((u) => u.name);
+// @ts-ignore: type inference issue
+export const ModelsRequestSortArray = ModelsRequestSortSchema.json.map((obj: { unit: string }) => obj.unit);
 
 export const NsfwLevelSchema = type.enumerated(
   "None",
@@ -63,12 +63,13 @@ export const NsfwLevelSchema = type.enumerated(
   "Blocked",
 );
 export type NsfwLevel = typeof NsfwLevelSchema.infer;
-export const NsfwLevelArray = NsfwLevelSchema.select("unit").map((u) => u.name);
+// @ts-ignore: type inference issue
+export const NsfwLevelArray = NsfwLevelSchema.json.map((obj: { unit: string }) => obj.unit);
 
 export const CheckpointTypeSchema = type.enumerated("Merge", "Trained");
 export type CheckpointType = typeof CheckpointTypeSchema.infer;
-export const CheckpointTypeArray = CheckpointTypeSchema
-  .select("unit").map((u) => u.name);
+// @ts-ignore: type inference issue
+export const CheckpointTypeArray = CheckpointTypeSchema.json.map((obj: { unit: string }) => obj.unit);
 
 export const BaseModelsSchema = type.enumerated(
   "Aura Flow",
@@ -119,5 +120,15 @@ export const BaseModelsSchema = type.enumerated(
   "WAN Video",
 );
 export type BaseModels = typeof BaseModelsSchema.infer;
-export const BaseModelsArray = BaseModelsSchema
-  .select("unit").map((u) => u.name);
+// @ts-ignore: type inference issue
+export const BaseModelsArray = BaseModelsSchema.json.map((obj: { unit: string }) => obj.unit);
+
+if (import.meta.main) {
+  console.log("BaseModelsArray:", BaseModelsArray);
+  // console.log("ModelTypesArray:", ModelTypesArray);
+  // console.log("ModelsRequestPeriodArray:", ModelsRequestPeriodArray);
+  // console.log("AllowCommercialUseArray:", AllowCommercialUseArray);
+  // console.log("ModelsRequestSortArray:", ModelsRequestSortArray);
+  // console.log("NsfwLevelArray:", NsfwLevelArray);
+  // console.log("CheckpointTypeArray:", CheckpointTypeArray);
+}
