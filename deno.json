@@ -24,6 +24,7 @@
     "@ant-design/icons": "npm:@ant-design/icons@^6.0.0",
     "@ant-design/v5-patch-for-react-19": "npm:@ant-design/v5-patch-for-react-19@^1.0.3",
     "@deno/vite-plugin": "npm:@deno/vite-plugin@^1.0.5",
+    "@gopeed/rest": "npm:@gopeed/rest@^1.6.2",
     "@orpc/client": "npm:@orpc/client@^1.7.2",
     "@orpc/contract": "npm:@orpc/contract@^1.7.4",
     "@orpc/openapi": "npm:@orpc/openapi@^1.7.2",

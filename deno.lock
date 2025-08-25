@@ -10,6 +10,7 @@
     "npm:@ant-design/icons@6": "6.0.0_react@19.1.0_react-dom@19.1.0__react@19.1.0",
     "npm:@ant-design/v5-patch-for-react-19@^1.0.3": "1.0.3_antd@5.26.5__react@19.1.0__react-dom@19.1.0___react@19.1.0__dayjs@1.11.13_react@19.1.0_react-dom@19.1.0__react@19.1.0",
     "npm:@deno/vite-plugin@^1.0.5": "1.0.5_vite@7.0.5__picomatch@4.0.3_@types+node@22.15.15",
+    "npm:@gopeed/rest@^1.6.2": "1.6.2",
     "npm:@orpc/client@^1.7.2": "1.7.2",
     "npm:@orpc/contract@^1.7.4": "1.7.4",
     "npm:@orpc/openapi-client@^1.7.4": "1.7.4",
@@ -527,6 +528,17 @@
       "os": ["win32"],
       "cpu": ["x64"],
       "tarball": "https://registry.npmmirror.com/@esbuild/win32-x64/-/win32-x64-0.25.6.tgz"
+    },
+    "@gopeed/rest@1.6.2": {
+      "integrity": "sha512-2gD/u3UjpT6S7a/rWyxS0YOFg3i+3XYU4gf1LPiKrSwdbBMOkUrdPc8EbzKsfZsiHwfzzB9eKQ4RkFqQiQcxNA==",
+      "dependencies": [
+        "@gopeed/types"
+      ],
+      "tarball": "https://registry.npmmirror.com/@gopeed/rest/-/rest-1.6.2.tgz"
+    },
+    "@gopeed/types@1.6.2": {
+      "integrity": "sha512-WkxpePtAZy7x8IWweIKyJ3fmS46HVPPHSicOonXdHttI9Ru6Pwf0iDxC1UK+4A50l96c0vbXDKhaYvT6JAOsWQ==",
+      "tarball": "https://registry.npmmirror.com/@gopeed/types/-/types-1.6.2.tgz"
     },
     "@isaacs/cliui@8.0.2": {
       "integrity": "sha512-O8jcjabXaleOG9DQ0+ARXWZBTfnP4WNAqzuiJK7ll44AmxGKv/J2M4TPjxjY3znBCfvBXFzucm1twdyFybFqEA==",
@@ -3993,6 +4005,7 @@
       "npm:@ant-design/icons@6",
       "npm:@ant-design/v5-patch-for-react-19@^1.0.3",
       "npm:@deno/vite-plugin@^1.0.5",
+      "npm:@gopeed/rest@^1.6.2",
       "npm:@orpc/client@^1.7.2",
       "npm:@orpc/contract@^1.7.4",
       "npm:@orpc/openapi-client@^1.7.4",

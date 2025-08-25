@@ -46,7 +46,7 @@ export const ModelId_ImageSchema = type({
 });
 export type ModelId_Image = typeof ModelId_ImageSchema.infer;
 
-export const modelId_ModelVersionSchema = type({
+export const ModelId_ModelVersionSchema = type({
   id: "number.integer",
   index: "number.integer", // the position in modelId.modelVersions array.
   name: "string",
@@ -68,7 +68,7 @@ export const modelId_ModelVersionSchema = type({
   files: ModelId_FileSchema.array(),
   images: ModelId_ImageSchema.array(),
 });
-export type ModelId_ModelVersion = typeof modelId_ModelVersionSchema.infer;
+export type ModelId_ModelVersion = typeof ModelId_ModelVersionSchema.infer;
 
 export const ModelId_ModelSchema = type({
   id: "number.integer",
@@ -95,7 +95,7 @@ export const ModelId_ModelSchema = type({
     tippedAmountCount: "number.integer",
   },
   tags: "string[]",
-  modelVersions: modelId_ModelVersionSchema.array(),
+  modelVersions: ModelId_ModelVersionSchema.array(),
 });
 export type ModelId_Model = typeof ModelId_ModelSchema.infer;
 
